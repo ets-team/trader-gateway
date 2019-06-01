@@ -34,6 +34,23 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>RELEASE</version>
         </dependency>
+		<!-- MYSQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- Spring Boot JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- Java library for transforming beans, maps, collections, java arrays and XML to JSON -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
     </dependencies>
 
 	<build>

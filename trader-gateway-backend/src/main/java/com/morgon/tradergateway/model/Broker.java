@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Broker {
     @Id
     @Column(nullable = false, name = "broker_id")
-    private String brokerID;
+    private Long brokerID;
 
     @Column(nullable = false, name = "broker_name")
     private String brokerName;
@@ -29,7 +29,7 @@ public class Broker {
 
     public Broker() {}
 
-    public Broker(String brokerID, String brokerName, String brokerHttp, String brokerWs, String brokerToken) {
+    public Broker(Long brokerID, String brokerName, String brokerHttp, String brokerWs, String brokerToken) {
         this.brokerID = brokerID;
         this.brokerName = brokerName;
         this.brokerHttp = brokerHttp;
@@ -37,11 +37,11 @@ public class Broker {
         this.brokerToken = brokerToken;
     }
 
-    public String getBrokerID() {
+    public Long getBrokerID() {
         return brokerID;
     }
 
-    public void setBrokerID(String brokerID) {
+    public void setBrokerID(Long brokerID) {
         this.brokerID = brokerID;
     }
 

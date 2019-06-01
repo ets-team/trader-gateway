@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Future implements Serializable {
     @Id
     @Column(nullable = false, name = "futures_id")
-    private String futureID;
+    private Long futureID;
 
     @Column(nullable = false, name = "futures_name")
     private String futureName;
@@ -39,7 +39,7 @@ public class Future implements Serializable {
 
     public Future() {}
 
-    public Future(String futureID, String futureName, String period, String symbol, String category, String expired, String icon) {
+    public Future(Long futureID, String futureName, String period, String symbol, String category, String expired, String icon) {
         this.futureID = futureID;
         this.futureName = futureName;
         this.period = period;
@@ -49,11 +49,11 @@ public class Future implements Serializable {
         this.icon = icon;
     }
 
-    public String getFutureID() {
+    public Long getFutureID() {
         return futureID;
     }
 
-    public void setFutureID(String futureID) {
+    public void setFutureID(Long futureID) {
         this.futureID = futureID;
     }
 
