@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lvjiawei
- * @date 2018/6/5
+ * @author Zhengyu Wu
+ * @date 2019/6/2
  * @desciprtion HTTP工具类
  * @version 1.0.0
  **/
