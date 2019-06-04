@@ -1,16 +1,10 @@
 package com.morgon.tradergateway.service;
 
-import com.morgon.tradergateway.model.Trader;
-
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
-/**
- * @author Zhengyu Wu
- * @date 2019/6/2
- * @description TraderService接口
- * @version 1.0.0
- **/
 public interface TraderService {
+
     /**
      * 所有用户信息
      * @return trader列表
@@ -22,27 +16,24 @@ public interface TraderService {
      * @param trader 新用户
      * @return 布尔值
      */
-    boolean checkDuplicate(Trader trader);
+    //boolean checkDuplicate(Trader trader);
 
-    /**
-     * 用户注册
-     * @param trader 新用户
-     * @return trader信息
-     */
-    Trader register(Trader trader);
+
 
     /**
      * 用户登录
      * @param traderName 用户名
      * @param password 密码
-     * @return token字符串
+     * @return rst
      */
-    String login(String traderName, String password);
+    String login(String traderName, String password, HttpSession session);
+
+
 
     /**
-     * 刷新Token
-     * @param oldToken 旧token
-     * @return 新token字符串
+     * 用户登出
+     * @param session session
+     * @return rst
      */
-    String refreshToken(String oldToken);
+    String logout(HttpSession session);
 }

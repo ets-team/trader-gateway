@@ -13,17 +13,17 @@ import java.util.UUID;
 public class Order implements Serializable {
     private UUID orderID;
 
-    private String futureID;
+    private Long futureID;
 
-    private char type;
+    private char type; // 'm','f','s','c'
 
-    private char side;
+    private char side;  // 'b','s'
 
-    private Double price;
+    private Integer price;
 
-    private Double price2;
+    private Integer price2;
 
-    private Double amount;
+    private Integer amount;
 
     private String brokerName;
 
@@ -31,8 +31,8 @@ public class Order implements Serializable {
 
     public Order() {}
 
-    public Order(UUID orderID, String futureID, char type, char side,
-                 Double price, Double price2, Double amount, String brokerName, LocalDateTime timeStamp) {
+    public Order(UUID orderID, Long futureID, char type, char side,
+                 Integer price, Integer price2, Integer amount, String brokerName, LocalDateTime timeStamp) {
         this.orderID = orderID;
         this.futureID = futureID;
         this.type = type;
@@ -52,11 +52,11 @@ public class Order implements Serializable {
         this.orderID = orderID;
     }
 
-    public String getFutureID() {
+    public Long getFutureID() {
         return futureID;
     }
 
-    public void setFutureID(String futureID) {
+    public void setFutureID(Long futureID) {
         this.futureID = futureID;
     }
 
@@ -76,19 +76,19 @@ public class Order implements Serializable {
         this.side = side;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public Double getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -108,11 +108,11 @@ public class Order implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public Double getPrice2() {
+    public Integer getPrice2() {
         return price2;
     }
 
-    public void setPrice2(Double price2) {
+    public void setPrice2(Integer price2) {
         this.price2 = price2;
     }
 }

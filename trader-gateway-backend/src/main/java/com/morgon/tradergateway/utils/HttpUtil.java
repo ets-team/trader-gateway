@@ -116,22 +116,5 @@ public class HttpUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        //String s = new HttpUtil().sendGet("http://202.120.40.87:22471/Entity/Ubfbd4152866263/iCampus/Member/",null,"");
-        //String s = HttpUtil.sendGet("http://202.120.40.87:22471/Entity/Ubfbd4152866263/iCampus/Member/", null);
-        //System.out.println(s);
-        // String result = HttpUtil.sendGet("http://private-8a634-matthiola.apiary-mock.com/futures/" + "123" + "/book", null);
-        //JSONObject jsonResult = JSONObject.fromObject(result);
-        //JSONObject jsonData = jsonResult.getJSONObject("data");
-        //System.out.println(jsonData);
-        String param = "futures_id=GC_SEP18&trader_name=fucker&page=1";
-        String result = new HttpUtil().sendGet("http://localhost:4869/mock/trades/", param, "123");
-        //System.out.println(result);
-        JSONObject jsonResult = JSONObject.fromObject(result);
-        JSONArray jsonArray = jsonResult.getJSONArray("data");
-        for (int i = 0; i < jsonArray.size(); i++) {
-            JSONObject object = jsonArray.getJSONObject(i);
-            System.out.println(object);
-        }
-    }
+
 }

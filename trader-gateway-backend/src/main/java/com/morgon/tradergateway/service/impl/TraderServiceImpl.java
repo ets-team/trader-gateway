@@ -3,86 +3,48 @@ package com.morgon.tradergateway.service.impl;
 import com.morgon.tradergateway.model.Trader;
 import com.morgon.tradergateway.repository.TraderRepository;
 import com.morgon.tradergateway.service.TraderService;
-import com.morgon.tradergateway.utils.JwtTokenUtil;
-import com.morgon.tradergateway.utils.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  * @author Zhengyu Wu
- * @date 2019/6/2
+ * @date 2019/6/4
  * @description TraderService实现
  * @version 1.0.0
  **/
 @Service("TraderService")
-public class TraderServiceImpl implements TraderService {
-    private TraderRepository traderRepository;
-    private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
-    private JwtTokenUtil jwtTokenUtil;
+public class TraderServiceImpl implements TraderService{
 
     @Autowired
-    public TraderServiceImpl(TraderRepository traderRepository, AuthenticationManager authenticationManager,
-                             UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
-        this.traderRepository = traderRepository;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
+    private TraderRepository traderRepository;
 
     @Override
-    public List findAllTraders() {
+    public List<Trader> findAllTraders() {
         return traderRepository.findAll();
     }
 
     @Override
-    public Trader register(Trader trader) {
-        String traderName = trader.getTraderName();
-        String rawPassword = trader.getPassword();
-        if(traderRepository.findTraderByTraderName(traderName) != null) {
-            return null;
-        }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encrytPassword = encoder.encode(rawPassword);
-        trader.setTraderID(new SnowflakeIdWorker(0, 0).nextId());
-        trader.setPassword(encrytPassword);
-        trader.setRole("ROLE_USER");
-        traderRepository.save(trader);
-        return trader;
+    public String login(String traderName, String password, HttpSession session){
+        System.out.println(traderName);
+        //String pw = traderRepository.findTraderByTraderName(traderName).getPassword();
+        /*System.out.println(pw);
+        if (pw.equals(password)){
+
+        // 设置session
+            session.setAttribute("user", traderName);
+*/
+            return "success";
+       // }
+        //else return "fail";
     }
 
     @Override
-    public boolean checkDuplicate(Trader trader) {
-        String traderName = trader.getTraderName();
-        Trader newTrader = traderRepository.findTraderByTraderName(traderName);
-        if(newTrader != null) return true;
-        else return false;
-    }
-
-    @Override
-    public String login(String traderName, String password) {
-        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(traderName, password);
-        Authentication authentication = authenticationManager.authenticate(upToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(traderName);
-        return jwtTokenUtil.generateToken(userDetails);
-    }
-
-    @Override
-    public String refreshToken(String oldToken) {
-        String token = oldToken.substring("Bearer ".length());
-        if (!jwtTokenUtil.isTokenExpired(token)) {
-            return jwtTokenUtil.refreshToken(token);
-        }
-        return "error";
+    public String logout(HttpSession session){
+        // 移除session
+        session.removeAttribute("user");
+        return "success";
     }
 }
