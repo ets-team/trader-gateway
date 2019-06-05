@@ -28,17 +28,17 @@ public class TraderServiceImpl implements TraderService{
 
     @Override
     public String login(String traderName, String password, HttpSession session){
-        System.out.println(traderName);
-        //String pw = traderRepository.findTraderByTraderName(traderName).getPassword();
-        /*System.out.println(pw);
+
+        String pw = traderRepository.findTraderByTraderName(traderName).getPassword();
+        System.out.println(pw);
         if (pw.equals(password)){
 
         // 设置session
             session.setAttribute("user", traderName);
-*/
+
             return "success";
-       // }
-        //else return "fail";
+        }
+        else return "fail";
     }
 
     @Override

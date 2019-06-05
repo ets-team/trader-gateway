@@ -11,13 +11,13 @@ import java.util.UUID;
  * @version 1.0.0
  **/
 public class Order implements Serializable {
-    private UUID orderID;
+    private Long orderID;
 
     private Long futureID;
 
-    private char type; // 'm','f','s','c'
+    private String type; // 'm','f','s','c'
 
-    private char side;  // 'b','s'
+    private String side;  // 'b','s'
 
     private Integer price;
 
@@ -27,11 +27,13 @@ public class Order implements Serializable {
 
     private String brokerName;
 
+    private String traderName;
+
     private LocalDateTime timeStamp;
 
     public Order() {}
 
-    public Order(UUID orderID, Long futureID, char type, char side,
+    public Order(Long orderID, Long futureID, String type, String side,
                  Integer price, Integer price2, Integer amount, String brokerName, LocalDateTime timeStamp) {
         this.orderID = orderID;
         this.futureID = futureID;
@@ -44,11 +46,11 @@ public class Order implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public UUID getOrderID() {
+    public Long getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(UUID orderID) {
+    public void setOrderID(Long orderID) {
         this.orderID = orderID;
     }
 
@@ -60,19 +62,19 @@ public class Order implements Serializable {
         this.futureID = futureID;
     }
 
-    public char getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(char type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public char getSide() {
+    public String getSide() {
         return side;
     }
 
-    public void setSide(char side) {
+    public void setSide(String side) {
         this.side = side;
     }
 
@@ -115,4 +117,13 @@ public class Order implements Serializable {
     public void setPrice2(Integer price2) {
         this.price2 = price2;
     }
+
+    public String getTraderName() {
+        return traderName;
+    }
+
+    public void setTraderName(String traderName) {
+        this.traderName = traderName;
+    }
 }
+

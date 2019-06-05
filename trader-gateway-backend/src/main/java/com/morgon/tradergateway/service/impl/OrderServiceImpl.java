@@ -1,5 +1,7 @@
 package com.morgon.tradergateway.service.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.morgon.tradergateway.model.Broker;
 import com.morgon.tradergateway.model.Order;
 import com.morgon.tradergateway.repository.BrokerRepository;
@@ -8,10 +10,13 @@ import com.morgon.tradergateway.utils.HttpUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.ConnectException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -23,30 +28,44 @@ import java.util.*;
  * @description OrderService实现
  * @version 1.0.0
  **/
-/*
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private BrokerRepository brokerRepository;
 
     @Override
-    public boolean sendOrder(Order order, HttpServletRequest request) {
-        String username = jwtTokenUtil.parseUsername(request);
-        if (username == null) return false;
+    public Order sendOrder(Order order, HttpServletRequest request) {
+        System.out.println("fuck1");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(order));
+        System.out.println("fuck");
 
-        order.setOrderID(UUID.randomUUID());
+        HttpSession session = request.getSession();
+        String tradername = session.getAttribute("user").toString();
+        if (tradername == null) return null;
+
+        //order.setOrderID();
         order.setTimeStamp(LocalDateTime.now(ZoneId.of("UTC")));
+        order.setTraderName(tradername);
+        order.setBrokerName("broker1");
 
-        String Target = brokerRepository.findBrokerByBrokerID(order.getBrokerName()).getBrokerName();
-        return false;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Order> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Order.class);
+        Order rst = re.getBody();
+        System.out.println(rst.toString());
+
+
+        return rst;
+
+
     }
 
     @Override
     public boolean cancelOrder(Order order, HttpServletRequest request) {
-        String username = jwtTokenUtil.parseUsername(request);
+        /*String username = jwtTokenUtil.parseUsername(request);
         if (username == null) return false;
 
-        String Target = order.getBrokerName();
+        String Target = order.getBrokerName();*/
 
         return false;
 
@@ -54,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Map getOrders(String futuresID, String status, String page, HttpServletRequest request) {
-        String username = jwtTokenUtil.parseUsername(request);
+        /*String username = jwtTokenUtil.parseUsername(request);
         String params = "";
         if (!futuresID.equals("null")) params = params + "&futures_id=" + futuresID;
         if (!status.equals("-1")) params = params + "&status=" + status;
@@ -77,11 +96,11 @@ public class OrderServiceImpl implements OrderService {
                 orderList.add(object);
             }
         }
-
+        */
         Map resultMap = new HashMap();
-        resultMap.put("orderList", orderList);
-        resultMap.put("totalNum", totalNum);
+        //resultMap.put("orderList", orderList);
+        //resultMap.put("totalNum", totalNum);
         return resultMap;
     }
-}*/
+}
 

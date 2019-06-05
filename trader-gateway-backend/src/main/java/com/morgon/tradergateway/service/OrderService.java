@@ -20,7 +20,7 @@ public interface OrderService {
      * @param request   http请求
      * @return boolean  发送结果
      */
-    boolean sendOrder(Order order, HttpServletRequest request);
+    Order sendOrder(Order order, HttpServletRequest request);
 
     /**
      * 取消订单
