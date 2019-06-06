@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * @author Zhengyu Wu
+ * @date 2019/5/29
+ * @description TraderController
+ * @version 1.0.0
+ **/
+
 @RestController
 @Api(value = "Trader Controller", description = "对Trader对象的操作", tags = "Trader")
 @RequestMapping("/trader")

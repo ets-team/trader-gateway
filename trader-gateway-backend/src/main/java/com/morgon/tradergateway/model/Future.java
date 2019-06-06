@@ -25,28 +25,17 @@ public class Future implements Serializable {
     @Column(nullable = false, name = "period")
     private String period;
 
-    @Column(nullable = false, name = "symbol")
-    private String symbol;
-
-    @Column(nullable = false, name = "category")
-    private String category;
-
     @Column(nullable = false, name = "expired")
-    private String expired;
+    private String expired; // "false" "true"
 
-    @Column(nullable = false, name = "icon")
-    private String icon;
 
     public Future() {}
 
-    public Future(Long futureID, String futureName, String period, String symbol, String category, String expired, String icon) {
+    public Future(Long futureID, String futureName, String period,  String expired) {
         this.futureID = futureID;
         this.futureName = futureName;
         this.period = period;
-        this.symbol = symbol;
-        this.category = category;
         this.expired = expired;
-        this.icon = icon;
     }
 
     public Long getFutureID() {
@@ -73,22 +62,6 @@ public class Future implements Serializable {
         this.period = period;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getExpired() {
         return expired;
     }
@@ -97,11 +70,4 @@ public class Future implements Serializable {
         this.expired = expired;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
 }

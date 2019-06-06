@@ -19,7 +19,7 @@ public interface FutureRepository extends JpaRepository<Future, String> {
      * @param futureID
      * @return Future
      */
-    Future findFutureByFutureID(String futureID);
+    Future findFutureByFutureID(Long futureID);
 
     /**
      * 通过futureName获取Future列表

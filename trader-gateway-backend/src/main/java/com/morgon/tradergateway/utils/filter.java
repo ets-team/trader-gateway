@@ -7,6 +7,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Zhengyu Wu
+ * @date 2019/6/1
+ * @description filter
+ * @version 1.0.0
+ **/
 @Component
 @WebFilter(urlPatterns = "/*", filterName = "CorsFilter")
 public class filter implements Filter {

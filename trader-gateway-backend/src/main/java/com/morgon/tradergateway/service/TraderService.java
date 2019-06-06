@@ -3,6 +3,12 @@ package com.morgon.tradergateway.service;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * @author Zhengyu Wu
+ * @date 2019/6/4
+ * @description TraderService接口
+ * @version 1.0.0
+ **/
 public interface TraderService {
 
     /**

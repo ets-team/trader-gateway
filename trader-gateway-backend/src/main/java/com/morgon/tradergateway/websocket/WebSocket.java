@@ -15,7 +15,12 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+/**
+ * @author Zhengyu Wu
+ * @date 2019/6/6
+ * @description WebSocket实现
+ * @version 1.0.0
+ **/
 @Component
 @ServerEndpoint("/chat/{username}")
 public class WebSocket {
