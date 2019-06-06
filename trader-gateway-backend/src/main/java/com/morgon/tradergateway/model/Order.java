@@ -29,12 +29,12 @@ public class Order implements Serializable {
 
     private String traderName;
 
-    private LocalDateTime timeStamp;
+    private Long traderOrderID;
 
     public Order() {}
 
     public Order(Long orderID, Long futureID, String type, String side,
-                 Integer price, Integer price2, Integer amount, String brokerName, LocalDateTime timeStamp) {
+                 Integer price, Integer price2, Integer amount, String brokerName, Long traderOrderID) {
         this.orderID = orderID;
         this.futureID = futureID;
         this.type = type;
@@ -43,7 +43,7 @@ public class Order implements Serializable {
         this.price2 = price;
         this.amount = amount;
         this.brokerName = brokerName;
-        this.timeStamp = timeStamp;
+        this.traderOrderID = traderOrderID;
     }
 
     public Long getOrderID() {
@@ -102,14 +102,6 @@ public class Order implements Serializable {
         this.brokerName = brokerName;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
     public Integer getPrice2() {
         return price2;
     }
@@ -124,6 +116,14 @@ public class Order implements Serializable {
 
     public void setTraderName(String traderName) {
         this.traderName = traderName;
+    }
+
+    public Long getTraderOrderID() {
+        return traderOrderID;
+    }
+
+    public void setTraderOrderID(Long traderOrderID) {
+        this.traderOrderID = traderOrderID;
     }
 }
 

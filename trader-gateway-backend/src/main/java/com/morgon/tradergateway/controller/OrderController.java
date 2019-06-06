@@ -24,7 +24,7 @@ public class OrderController {
     @ApiOperation(value="Send order", notes="Send order")
     @ResponseBody
     @RequestMapping(value = "/sendOrder", method = RequestMethod.POST)
-    public Order loginPost(@RequestBody Order order, HttpServletRequest hr) {
+    public Boolean sendOrder(@RequestBody Order order, HttpServletRequest hr) {
         return orderService.sendOrder(order,  hr);
     }
 }

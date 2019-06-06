@@ -34,28 +34,29 @@ public class OrderServiceImpl implements OrderService {
     private BrokerRepository brokerRepository;
 
     @Override
-    public Order sendOrder(Order order, HttpServletRequest request) {
+    public Boolean sendOrder(Order order, HttpServletRequest request) {
+        /*
         System.out.println("fuck1");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(gson.toJson(order));
-        System.out.println("fuck");
+        System.out.println("fuck");*/
 
-        HttpSession session = request.getSession();
-        String tradername = session.getAttribute("user").toString();
-        if (tradername == null) return null;
+        //HttpSession session = request.getSession();
+        //String tradername = session.getAttribute("user").toString();
+        //if (tradername == null) return null;
 
         //order.setOrderID();
-        order.setTimeStamp(LocalDateTime.now(ZoneId.of("UTC")));
-        order.setTraderName(tradername);
-        order.setBrokerName("broker1");
+        //order.setTimeStamp(LocalDateTime.now(ZoneId.of("UTC")));
+        //order.setTraderName(tradername);
+        //order.setBrokerName("broker1");
+
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Order> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Order.class);
-        Order rst = re.getBody();
-        System.out.println(rst.toString());
+        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Boolean.class);
+        Boolean rst = re.getBody();
+        //System.out.println(rst.toString());
 
-
-        return rst;
+        return !rst;
 
 
     }
