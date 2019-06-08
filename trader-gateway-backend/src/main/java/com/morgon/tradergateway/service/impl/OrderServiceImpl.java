@@ -62,13 +62,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean cancelOrder(Order order, HttpServletRequest request) {
-        /*String username = jwtTokenUtil.parseUsername(request);
-        if (username == null) return false;
+    public Boolean cancelOrder(Order order, HttpServletRequest request) {
 
-        String Target = order.getBrokerName();*/
+        if (!order.getType().equals("c")){
+            order.setType("c");
+        }
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Boolean.class);
+        Boolean rst = re.getBody();
 
-        return false;
+        return !rst;
 
     }
 

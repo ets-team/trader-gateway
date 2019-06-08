@@ -32,7 +32,7 @@ public interface TraderService {
      * @param password 密码
      * @return rst
      */
-    String login(String traderName, String password, HttpSession session);
+    Long login(String traderName, String password, HttpSession session);
 
 
 

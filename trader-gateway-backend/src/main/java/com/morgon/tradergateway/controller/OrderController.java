@@ -34,4 +34,11 @@ public class OrderController {
     public Boolean sendOrder(@RequestBody Order order, HttpServletRequest hr) {
         return orderService.sendOrder(order,  hr);
     }
+
+    @ApiOperation(value="Cancel order", notes="Cancel order")
+    @ResponseBody
+    @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
+    public Boolean cancelOrder(@RequestBody Order order, HttpServletRequest hr) {
+        return orderService.cancelOrder(order,  hr);
+    }
 }

@@ -10,12 +10,13 @@ import java.util.UUID;
  * @description Order
  * @version 1.0.0
  **/
+
 public class Order implements Serializable {
     private Long orderID;
 
     private Long futureID;
 
-    private String type; // 'm','f','s','c'
+    private String type; // 'm','l','s','c' => market order, limit order, stop order, cancel order
 
     private String side;  // 'b','s'
 

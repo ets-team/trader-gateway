@@ -28,7 +28,7 @@ public interface OrderService {
      * @param request   http请求
      * @return boolean  取消结果
      */
-    boolean cancelOrder(Order order, HttpServletRequest request);
+    Boolean cancelOrder(Order order, HttpServletRequest request);
 
     /**
      * 获取订单信息

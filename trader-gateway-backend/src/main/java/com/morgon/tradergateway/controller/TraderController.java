@@ -27,7 +27,7 @@ public class TraderController {
     @ApiOperation(value="login", notes="Log in")
     @ResponseBody
     @RequestMapping(value = "/login/{tradername}/{password}", method = RequestMethod.POST)
-    public String loginPost(@PathVariable("tradername") String tradername, @PathVariable("password")String password, HttpSession session) {
+    public Long loginPost(@PathVariable("tradername") String tradername, @PathVariable("password")String password, HttpSession session) {
         return traderService.login(tradername, password, session);
     }
 

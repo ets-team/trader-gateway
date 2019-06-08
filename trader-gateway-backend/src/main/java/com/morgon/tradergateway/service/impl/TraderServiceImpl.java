@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class TraderServiceImpl implements TraderService{
     }
 
     @Override
-    public String login(String traderName, String password, HttpSession session){
+    public Long login(String traderName, String password, HttpSession session){
 
         String pw = traderRepository.findTraderByTraderName(traderName).getPassword();
         System.out.println(pw);
@@ -36,14 +37,17 @@ public class TraderServiceImpl implements TraderService{
         // 设置session
             session.setAttribute("user", traderName);
 
-            return "success";
+            Long traderId = traderRepository.findTraderByTraderName(traderName).getTraderID();
+
+            return traderId;
         }
-        else return "fail";
+        else return Long.valueOf(-1);
     }
 
     @Override
     public String logout(HttpSession session){
         // 移除session
+        //System.out.println(session.getAttribute("user"));
         session.removeAttribute("user");
         return "success";
     }

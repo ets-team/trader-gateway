@@ -45,11 +45,11 @@ public class WebSocket {
             socketMsg = objectMapper.readValue(message, SocketMsg.class);
             //群发
             if (socketMsg.getType() == 0) {
-                sendMessageAll("用户[" + username + "] : " + socketMsg.getMsg());
+                sendMessageAll("用户[" + username + "] : " /*+ socketMsg.getMsg()*/);
             }
             //单聊.需要找到发送者和接受者.
             else{
-                sendMessage(clients.get(socketMsg.getToUser()), "[" + username + "]" + "-> [" + socketMsg.getToUser() + "] : " + socketMsg.getMsg());
+                sendMessage(clients.get(socketMsg.getToUser()), "[" + username + "]" + "-> [" + socketMsg.getToUser() + "] : " + socketMsg.getMarketDepth());
                 //sendMessage(clients.get(username), "[" + username + "]" + "-> [" + socketMsg.getToUser() + "] : " + socketMsg.getMsg());
             }
         }
