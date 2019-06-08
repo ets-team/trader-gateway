@@ -41,5 +41,4 @@ public class SocketMsg {
     public void setMsg(String msg) {
         this.msg = msg;
     }*/
-
 }
