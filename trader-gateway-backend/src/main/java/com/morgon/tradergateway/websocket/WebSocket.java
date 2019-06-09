@@ -18,9 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Zhengyu Wu
  * @date 2019/6/6
- * @description WebSocket实现
+ * @description WebSocket server side实现
  * @version 1.0.0
  **/
+
 @Component
 @ServerEndpoint("/chat/{username}")
 public class WebSocket {
@@ -80,7 +81,6 @@ public class WebSocket {
         }
         throwable.printStackTrace();
     }
-
 
 
     private static void sendMessageAll(String message) {

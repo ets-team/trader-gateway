@@ -14,6 +14,7 @@ import java.util.Map;
  * @version 1.0.0
  **/
 public interface OrderService {
+
     /**
      * 发送订单
      * @param order     订单
@@ -22,6 +23,7 @@ public interface OrderService {
      */
     Boolean sendOrder(Order order, HttpServletRequest request);
 
+
     /**
      * 取消订单
      * @param order     订单
@@ -29,6 +31,7 @@ public interface OrderService {
      * @return boolean  取消结果
      */
     Boolean cancelOrder(Order order, HttpServletRequest request);
+
 
     /**
      * 获取订单信息
@@ -40,6 +43,7 @@ public interface OrderService {
      */
     Map getOrders(String futuresID, String status, String page, HttpServletRequest request);
 
+
     /**
      * 拆分并发送订单
      * @param order     订单
@@ -47,5 +51,21 @@ public interface OrderService {
      * @return boolean  结果
      */
     Boolean iceBerg(Order order, HttpServletRequest request);
+
+    /**
+     * TWAP策略拆分发送大额订单
+     * @param order     订单
+     * @param request   http请求
+     * @return boolean  结果
+     */
+    Boolean TWAP(Order order, HttpServletRequest request);
+
+    /**
+     * VWAP策略拆分发送大额订单
+     * @param order     订单
+     * @param request   http请求
+     * @return boolean  结果
+     */
+    Boolean VWAP(Order order, HttpServletRequest request);
 }
 

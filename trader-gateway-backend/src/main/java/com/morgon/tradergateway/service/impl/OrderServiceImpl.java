@@ -1,15 +1,19 @@
 package com.morgon.tradergateway.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import com.morgon.tradergateway.model.Broker;
 import com.morgon.tradergateway.model.Order;
+import com.morgon.tradergateway.model.OrderbookItem;
 import com.morgon.tradergateway.repository.BrokerRepository;
+import com.morgon.tradergateway.repository.FutureRepository;
 import com.morgon.tradergateway.service.OrderService;
 import com.morgon.tradergateway.utils.HttpUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -32,6 +36,8 @@ import java.util.*;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private BrokerRepository brokerRepository;
+    @Autowired
+    private FutureRepository futureRepository;
 
     @Override
     public Boolean sendOrder(Order order, HttpServletRequest request) {
@@ -57,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
         //System.out.println(rst.toString());
 
         return !rst;
-        
+
     }
 
     @Override
@@ -154,6 +160,136 @@ public class OrderServiceImpl implements OrderService {
 
         return !rst1 & !rst2 & !rst3 ;
 
+    }
+
+    @Override
+    public Boolean TWAP(Order order, HttpServletRequest request){
+
+        //String futurename = futureRepository.findFutureByFutureID(order.getFutureID()).getFutureName();
+        //String expired = futureRepository.findFutureByFutureID(order.getFutureID()).getExpired();
+
+        String url = "http://202.120.40.8:30405/broker_tradehistory?futureName=" + "test" + "&period=" + "test";
+        //System.out.println(url);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Object> re =
+                restTemplate.exchange(url,
+                        HttpMethod.GET, null, new ParameterizedTypeReference<Object>() {
+                        });
+        Object rst = re.getBody();
+
+        Gson gson = new Gson();
+        // 将list集合变成json格式
+        String str = gson.toJson(rst);
+        //System.out.println(str);
+        // 将str json格式变成 list格式
+        List<OrderbookItem> list = gson.fromJson(str, new TypeToken<List<OrderbookItem>>() {
+        }.getType());
+
+        int total_price = 0;
+        int total_num = list.size();
+        //System.out.println(total_num);
+        for (int i = 0; i < total_num; i++) {
+            total_price += list.get(i).price;
+        }
+
+        int twap_price = total_price/total_num;
+
+        int amount = order.getAmount()/10; // split into 10 pierces
+
+        Order order_once = new Order();
+        order_once.setAmount(amount);
+        order_once.setType("m");  // 转成market type
+        order_once.setTraderName(order.getTraderName());
+        order_once.setFutureID(order.getFutureID());
+        order_once.setOrderID(order.getOrderID());
+        order_once.setPrice(twap_price);
+        order_once.setPrice2(twap_price);
+        order_once.setSide(order.getSide());
+
+        int count = 0;
+        while(count < 10) {
+            try {
+                if (count == 9){
+                    order_once.setAmount(order.getAmount()-9*amount);
+                }
+                Thread.sleep(6*1000 ); //设置暂停的时间 6 秒,
+                //System.out.println(1);
+
+                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order_once, Boolean.class);
+                Boolean rst1 = re1.getBody();
+
+                count ++;
+                } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean VWAP(Order order, HttpServletRequest request){
+
+        //String futurename = futureRepository.findFutureByFutureID(order.getFutureID()).getFutureName();
+        //String expired = futureRepository.findFutureByFutureID(order.getFutureID()).getExpired();
+
+        String url = "http://202.120.40.8:30405/broker_tradehistory?futureName=" + "test" + "&period=" + "test";
+        //System.out.println(url);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Object> re =
+                restTemplate.exchange(url,
+                        HttpMethod.GET, null, new ParameterizedTypeReference<Object>() {
+                        });
+        Object rst = re.getBody();
+
+        Gson gson = new Gson();
+        // 将list集合变成json格式
+        String str = gson.toJson(rst);
+        //System.out.println(str);
+        // 将str json格式变成 list格式
+        List<OrderbookItem> list = gson.fromJson(str, new TypeToken<List<OrderbookItem>>() {
+        }.getType());
+
+        int total_price = 0;
+        int total_num = list.size();
+        int total_qty = 0;
+        //System.out.println(total_num);
+        for (int i = 0; i < total_num; i++) {
+            total_price += list.get(i).price * list.get(i).qty;
+            total_qty += list.get(i).qty;
+        }
+
+        int vwap_price = total_price/total_qty;
+
+        int amount = order.getAmount()/10; // split into 10 pierces
+
+        Order order_once = new Order();
+        order_once.setAmount(amount);
+        order_once.setType("m");  // 转成market type
+        order_once.setTraderName(order.getTraderName());
+        order_once.setFutureID(order.getFutureID());
+        order_once.setOrderID(order.getOrderID());
+        order_once.setPrice(vwap_price);
+        order_once.setPrice2(vwap_price);
+        order_once.setSide(order.getSide());
+
+        int count = 0;
+        while(count < 10) {
+            try {
+                if (count == 9){
+                    order_once.setAmount(order.getAmount()-9*amount);
+                }
+                Thread.sleep(6*1000 ); //设置暂停的时间 6 秒,
+                //System.out.println(1);
+
+                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order_once, Boolean.class);
+                Boolean rst1 = re1.getBody();
+
+                count ++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
     }
 }
 
