@@ -1,15 +1,15 @@
 package com.morgon.tradergateway.websocket;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.morgon.tradergateway.repository.TraderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
 import java.net.URI;
 
-import javax.websocket.ClientEndpoint;
-import javax.websocket.CloseReason;
-import javax.websocket.ContainerProvider;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
+import javax.websocket.*;
 
 /**
  * @author Zhengyu Wu
@@ -22,6 +22,9 @@ import javax.websocket.WebSocketContainer;
 public class ChatClientEndpoint {
     Session userSession = null;
     private MessageHandler messageHandler;
+
+    @Autowired
+    private TraderRepository traderRepository;
 
     public ChatClientEndpoint(URI endpointURI) {
         try {
@@ -72,6 +75,35 @@ public class ChatClientEndpoint {
       //      this.messageHandler.handleMessage(message);
         System.out.println("Received!");
         System.out.println(message);
+
+        if (!message.equals("Connected")){
+            //JsonObject jobj = new Gson().fromJson(new Gson().toJson(message), JsonObject.class);
+
+            JsonParser jsonParser = new JsonParser();
+            JsonObject jobj = jsonParser.parse(message).getAsJsonObject();
+
+            Long traderId = jobj.get("traderID").getAsLong();
+
+            String tradername_ws = traderRepository.findTraderByTraderID(traderId).getTraderName();
+
+            for (String tradername : WebSocket.clients.keySet()) {
+
+                if (tradername.equals(tradername_ws)){
+                    Session session = WebSocket.clients.get(tradername);
+                    final RemoteEndpoint.Basic basic = session.getBasicRemote();
+                    if (basic == null) {
+                        return;
+                    }
+                    try {
+                        basic.sendText(message);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }
+
     }
 
     /**

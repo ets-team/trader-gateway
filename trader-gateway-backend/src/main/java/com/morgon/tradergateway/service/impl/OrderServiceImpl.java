@@ -242,7 +242,6 @@ public class OrderServiceImpl implements OrderService {
         Object rst = re.getBody();
 
         Gson gson = new Gson();
-        // 将list集合变成json格式
         String str = gson.toJson(rst);
         //System.out.println(str);
         // 将str json格式变成 list格式

@@ -18,5 +18,6 @@ public interface TraderRepository extends JpaRepository<Trader, Long> {
      * @return Trader
      */
     Trader findTraderByTraderName(String traderName);
+    Trader findTraderByTraderID(Long traderId);
     Trader findTraderByTraderNameAndPassword(String traderName, String password);
 }

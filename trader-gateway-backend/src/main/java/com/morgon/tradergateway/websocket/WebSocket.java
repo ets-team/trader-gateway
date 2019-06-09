@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint("/chat/{username}")
 public class WebSocket {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static Map<String, Session> clients = new ConcurrentHashMap<>();
+    public static Map<String, Session> clients = new ConcurrentHashMap<>();
 
     @OnOpen
     public void openSession(@PathParam("username") String username, Session session) {
@@ -92,7 +92,7 @@ public class WebSocket {
             return;
         }
         final RemoteEndpoint.Basic basic = session.getBasicRemote();
-        if (basic == null) {
+            if (basic == null) {
             return;
         }
         try {

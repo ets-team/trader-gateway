@@ -33,11 +33,11 @@ public class WebSocketConmandLineRunner implements CommandLineRunner{
             }
         });
 
-
+        /*
         while (true) {
             clientEndPoint.sendMessage(getMessage("Hi There!!"));
             Thread.sleep(30000);
-        }
+        }*/
 
 
     }
