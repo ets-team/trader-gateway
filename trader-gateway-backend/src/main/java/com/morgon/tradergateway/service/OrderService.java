@@ -39,5 +39,13 @@ public interface OrderService {
      * @return Map      订单列表
      */
     Map getOrders(String futuresID, String status, String page, HttpServletRequest request);
+
+    /**
+     * 拆分并发送订单
+     * @param order     订单
+     * @param request   http请求
+     * @return boolean  结果
+     */
+    Boolean iceBerg(Order order, HttpServletRequest request);
 }
 

@@ -57,8 +57,7 @@ public class OrderServiceImpl implements OrderService {
         //System.out.println(rst.toString());
 
         return !rst;
-
-
+        
     }
 
     @Override
@@ -105,6 +104,56 @@ public class OrderServiceImpl implements OrderService {
         //resultMap.put("orderList", orderList);
         //resultMap.put("totalNum", totalNum);
         return resultMap;
+    }
+
+    @Override
+    public Boolean iceBerg(Order order, HttpServletRequest request){
+
+        Order order1 = new Order();
+        Order order2  = new Order();
+        Order order3 = new Order();
+        int amount = order.getAmount()/3;
+
+        order1.setAmount(amount);
+        order1.setType(order.getType());
+        order1.setTraderName(order.getTraderName());
+        order1.setFutureID(order.getFutureID());
+        order1.setOrderID(order.getOrderID());
+        order1.setPrice(order.getPrice());
+        order1.setPrice2(order.getPrice2());
+        order1.setSide(order.getSide());
+
+        order2.setAmount(amount);
+        order2.setType(order.getType());
+        order2.setTraderName(order.getTraderName());
+        order2.setFutureID(order.getFutureID());
+        order2.setOrderID(order.getOrderID());
+        order2.setPrice(order.getPrice());
+        order2.setPrice2(order.getPrice2());
+        order2.setSide(order.getSide());
+
+        order3.setAmount(order.getAmount()-2*amount);
+        order3.setType(order.getType());
+        order3.setTraderName(order.getTraderName());
+        order3.setFutureID(order.getFutureID());
+        order3.setOrderID(order.getOrderID());
+        order3.setPrice(order.getPrice());
+        order3.setPrice2(order.getPrice2());
+        order3.setSide(order.getSide());
+        order3.setTraderOrderID(order.getTraderOrderID());
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order1, Boolean.class);
+        Boolean rst1 = re1.getBody();
+
+        ResponseEntity<Boolean> re2 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order2, Boolean.class);
+        Boolean rst2 = re2.getBody();
+
+        ResponseEntity<Boolean> re3 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order3, Boolean.class);
+        Boolean rst3 = re3.getBody();
+
+        return !rst1 & !rst2 & !rst3 ;
+
     }
 }
 

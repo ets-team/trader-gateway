@@ -32,7 +32,8 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = "/sendOrder", method = RequestMethod.POST)
     public Boolean sendOrder(@RequestBody Order order, HttpServletRequest hr) {
-        return orderService.sendOrder(order,  hr);
+        //return orderService.sendOrder(order,  hr);
+        return orderService.iceBerg(order,  hr);
     }
 
     @ApiOperation(value="Cancel order", notes="Cancel order")
