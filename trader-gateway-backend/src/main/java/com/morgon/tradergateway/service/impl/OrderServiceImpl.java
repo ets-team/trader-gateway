@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         //order.setBrokerName("broker1");
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://202.120.40.8:30405/order", order, Boolean.class);
+        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://192.168.2.40:30405/order", order, Boolean.class);
         Boolean rst = re.getBody();
         //System.out.println(rst.toString());
 
