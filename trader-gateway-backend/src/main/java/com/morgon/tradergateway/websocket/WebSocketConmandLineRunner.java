@@ -21,7 +21,7 @@ public class WebSocketConmandLineRunner implements CommandLineRunner{
     @Override
     public void run(String... var1) throws Exception{
         //System.out.println("This will be execute when the project was started!");
-        final ChatClientEndpoint clientEndPoint = new ChatClientEndpoint(new URI("ws://202.120.40.8:30405/websocket/bhh")); //202.120.40.8 //192.168.2.40
+        final ChatClientEndpoint clientEndPoint = new ChatClientEndpoint(new URI("ws://192.168.2.40:30405/websocket/bhh")); //202.120.40.8 //192.168.2.40
                 clientEndPoint.addMessageHandler(new ChatClientEndpoint.MessageHandler() {
             public void handleMessage(String message) {
                 JsonObject jsonObject = Json.createReader(new StringReader(message)).readObject();
