@@ -1,8 +1,10 @@
 package com.morgon.tradergateway.websocket;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.morgon.tradergateway.model.Trader;
 import com.morgon.tradergateway.repository.TraderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -83,12 +85,24 @@ public class ChatClientEndpoint {
             JsonObject jobj = jsonParser.parse(message).getAsJsonObject();
 
             Long traderId = jobj.get("traderID").getAsLong();
+            String tradername_ws = jobj.get("traderName").getAsString();
+            System.out.println(tradername_ws);
+
+            /*
+            Trader trader = traderRepository.findTraderByTraderID(Long.valueOf(1));
+
+            System.out.println("fuck1");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            System.out.println(gson.toJson(trader));
+            System.out.println("fuck");
 
             String tradername_ws = traderRepository.findTraderByTraderID(traderId).getTraderName();
+            System.out.println(tradername_ws);*/
 
             for (String tradername : WebSocket.clients.keySet()) {
 
                 if (tradername.equals(tradername_ws)){
+                    System.out.println(message);
                     Session session = WebSocket.clients.get(tradername);
                     final RemoteEndpoint.Basic basic = session.getBasicRemote();
                     if (basic == null) {
@@ -102,6 +116,9 @@ public class ChatClientEndpoint {
                 }
 
             }
+        }
+        else {
+            System.out.println("Connected");
         }
 
     }

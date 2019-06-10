@@ -1,6 +1,7 @@
 package com.morgon.tradergateway.controller;
 
 import com.morgon.tradergateway.model.Trader;
+import com.morgon.tradergateway.repository.TraderRepository;
 import com.morgon.tradergateway.service.TraderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +25,9 @@ public class TraderController {
     @Autowired
     private TraderService traderService;
 
+    @Autowired
+    private TraderRepository traderRepository;
+
     @ApiOperation(value="login", notes="Log in")
     @ResponseBody
     @RequestMapping(value = "/login/{tradername}/{password}", method = RequestMethod.POST)
@@ -45,6 +49,13 @@ public class TraderController {
     public List<Trader> getAllTraders() {
 
         return traderService.findAllTraders();
+    }
+
+    @ApiOperation(value="fuck", notes="fuck in")
+    @ResponseBody
+    @RequestMapping(value = "/fuck/{traderID}", method = RequestMethod.GET)
+    public Trader loginPost(@PathVariable("traderID") Long traderID) {
+        return traderRepository.findTraderByTraderID(traderID);
     }
 
 
