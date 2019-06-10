@@ -10,13 +10,12 @@ import java.util.UUID;
  * @description Order
  * @version 1.0.0
  **/
-
 public class Order implements Serializable {
     private Long orderID;
 
     private Long futureID;
 
-    private String type; // 'm','l','s','c' => market order, limit order, stop order, cancel order
+    private String type; // 'm','l','s','c' => market order, limit order, stop order, cancel
 
     private String side;  // 'b','s'
 
@@ -30,8 +29,6 @@ public class Order implements Serializable {
 
     private String traderName;
 
-    private Long traderOrderID;
-
     public Order() {}
 
     public Order(Long orderID, Long futureID, String type, String side,
@@ -44,7 +41,6 @@ public class Order implements Serializable {
         this.price2 = price;
         this.amount = amount;
         this.brokerName = brokerName;
-        this.traderOrderID = traderOrderID;
     }
 
     public Long getOrderID() {
@@ -119,12 +115,5 @@ public class Order implements Serializable {
         this.traderName = traderName;
     }
 
-    public Long getTraderOrderID() {
-        return traderOrderID;
-    }
-
-    public void setTraderOrderID(Long traderOrderID) {
-        this.traderOrderID = traderOrderID;
-    }
 }
 

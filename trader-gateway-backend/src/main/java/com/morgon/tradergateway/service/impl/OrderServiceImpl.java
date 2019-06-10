@@ -9,6 +9,7 @@ import com.morgon.tradergateway.repository.BrokerRepository;
 import com.morgon.tradergateway.repository.FutureRepository;
 import com.morgon.tradergateway.service.OrderService;
 import com.morgon.tradergateway.utils.HttpUtil;
+import com.morgon.tradergateway.utils.SnowflakeIdWorker;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,12 @@ public class OrderServiceImpl implements OrderService {
         //String tradername = session.getAttribute("user").toString();
         //if (tradername == null) return null;
 
-        //order.setOrderID();
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        long id = idWorker.nextId();
+        order.setOrderID(id);
         //order.setTimeStamp(LocalDateTime.now(ZoneId.of("UTC")));
         //order.setTraderName(tradername);
         //order.setBrokerName("broker1");
-
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Boolean> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Boolean.class);
@@ -120,42 +122,45 @@ public class OrderServiceImpl implements OrderService {
         Order order3 = new Order();
         int amount = order.getAmount()/3;
 
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        long id1 = idWorker.nextId();
         order1.setAmount(amount);
         order1.setType(order.getType());
         order1.setTraderName(order.getTraderName());
         order1.setFutureID(order.getFutureID());
-        order1.setOrderID(order.getOrderID());
+        order1.setOrderID(id1);
         order1.setPrice(order.getPrice());
         order1.setPrice2(order.getPrice2());
         order1.setSide(order.getSide());
 
+        long id2 = idWorker.nextId();
         order2.setAmount(amount);
         order2.setType(order.getType());
         order2.setTraderName(order.getTraderName());
         order2.setFutureID(order.getFutureID());
-        order2.setOrderID(order.getOrderID());
+        order2.setOrderID(id2);
         order2.setPrice(order.getPrice());
         order2.setPrice2(order.getPrice2());
         order2.setSide(order.getSide());
 
+        long id3 = idWorker.nextId();
         order3.setAmount(order.getAmount()-2*amount);
         order3.setType(order.getType());
         order3.setTraderName(order.getTraderName());
         order3.setFutureID(order.getFutureID());
-        order3.setOrderID(order.getOrderID());
+        order3.setOrderID(id3);
         order3.setPrice(order.getPrice());
         order3.setPrice2(order.getPrice2());
         order3.setSide(order.getSide());
-        order3.setTraderOrderID(order.getTraderOrderID());
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order1, Boolean.class);
+        ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://202.120.40.8:30405/order", order1, Boolean.class);
         Boolean rst1 = re1.getBody();
 
-        ResponseEntity<Boolean> re2 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order2, Boolean.class);
+        ResponseEntity<Boolean> re2 = restTemplate.postForEntity("http://202.120.40.8:30406/order", order2, Boolean.class);
         Boolean rst2 = re2.getBody();
 
-        ResponseEntity<Boolean> re3 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order3, Boolean.class);
+        ResponseEntity<Boolean> re3 = restTemplate.postForEntity("http://202.120.40.8:30407/order", order3, Boolean.class);
         Boolean rst3 = re3.getBody();
 
         return !rst1 & !rst2 & !rst3 ;
@@ -201,10 +206,12 @@ public class OrderServiceImpl implements OrderService {
         order_once.setType("m");  // 转成market type
         order_once.setTraderName(order.getTraderName());
         order_once.setFutureID(order.getFutureID());
-        order_once.setOrderID(order.getOrderID());
         order_once.setPrice(twap_price);
         order_once.setPrice2(twap_price);
         order_once.setSide(order.getSide());
+
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+
 
         int count = 0;
         while(count < 10) {
@@ -214,6 +221,9 @@ public class OrderServiceImpl implements OrderService {
                 }
                 Thread.sleep(6*1000 ); //设置暂停的时间 6 秒,
                 //System.out.println(1);
+
+                long id = idWorker.nextId();
+                order_once.setOrderID(id);
 
                 ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order_once, Boolean.class);
                 Boolean rst1 = re1.getBody();
@@ -266,10 +276,11 @@ public class OrderServiceImpl implements OrderService {
         order_once.setType("m");  // 转成market type
         order_once.setTraderName(order.getTraderName());
         order_once.setFutureID(order.getFutureID());
-        order_once.setOrderID(order.getOrderID());
         order_once.setPrice(vwap_price);
         order_once.setPrice2(vwap_price);
         order_once.setSide(order.getSide());
+
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
 
         int count = 0;
         while(count < 10) {
@@ -279,6 +290,9 @@ public class OrderServiceImpl implements OrderService {
                 }
                 Thread.sleep(6*1000 ); //设置暂停的时间 6 秒,
                 //System.out.println(1);
+
+                long id = idWorker.nextId();
+                order_once.setOrderID(id);
 
                 ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order_once, Boolean.class);
                 Boolean rst1 = re1.getBody();
