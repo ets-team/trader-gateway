@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         //order.setBrokerName("broker1");
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Boolean.class);
+        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://202.120.40.8:30405/order", order, Boolean.class);
         Boolean rst = re.getBody();
         //System.out.println(rst.toString());
 
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
             order.setType("c");
         }
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://59.78.48.187:8011/order", order, Boolean.class);
+        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://202.120.40.8:30405/order", order, Boolean.class);
         Boolean rst = re.getBody();
 
         return !rst;
@@ -142,6 +142,7 @@ public class OrderServiceImpl implements OrderService {
         order2.setPrice(order.getPrice());
         order2.setPrice2(order.getPrice2());
         order2.setSide(order.getSide());
+
 
         long id3 = idWorker.nextId();
         order3.setAmount(order.getAmount()-2*amount);
@@ -225,7 +226,7 @@ public class OrderServiceImpl implements OrderService {
                 long id = idWorker.nextId();
                 order_once.setOrderID(id);
 
-                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order_once, Boolean.class);
+                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://202.120.40.8:30405/order", order_once, Boolean.class);
                 Boolean rst1 = re1.getBody();
 
                 count ++;
@@ -294,7 +295,7 @@ public class OrderServiceImpl implements OrderService {
                 long id = idWorker.nextId();
                 order_once.setOrderID(id);
 
-                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://59.78.48.187:8011/order", order_once, Boolean.class);
+                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://202.120.40.8:30405/order", order_once, Boolean.class);
                 Boolean rst1 = re1.getBody();
 
                 count ++;
