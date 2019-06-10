@@ -24,7 +24,7 @@ public class TradeServiceImpl implements TradeService {
     @Override
     public Object findAllTrades(int traderId) {
 
-        String url = "http://59.78.48.187:8011/history?traderID=" + traderId;
+        String url = "http://192.168.2.40:30405/history?traderID=" + traderId;
         //System.out.println(url);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Object> re =

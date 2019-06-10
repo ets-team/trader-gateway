@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
             order.setType("c");
         }
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://202.120.40.8:30405/order", order, Boolean.class);
+        ResponseEntity<Boolean> re = restTemplate.postForEntity("http://192.168.2.40:30405/order", order, Boolean.class);
         Boolean rst = re.getBody();
 
         return !rst;
@@ -155,13 +155,13 @@ public class OrderServiceImpl implements OrderService {
         order3.setSide(order.getSide());
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://202.120.40.8:30405/order", order1, Boolean.class);
+        ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://192.168.2.40:30405/order", order1, Boolean.class);
         Boolean rst1 = re1.getBody();
 
-        ResponseEntity<Boolean> re2 = restTemplate.postForEntity("http://202.120.40.8:30406/order", order2, Boolean.class);
+        ResponseEntity<Boolean> re2 = restTemplate.postForEntity("http://192.168.2.40:30405/order", order2, Boolean.class);
         Boolean rst2 = re2.getBody();
 
-        ResponseEntity<Boolean> re3 = restTemplate.postForEntity("http://202.120.40.8:30407/order", order3, Boolean.class);
+        ResponseEntity<Boolean> re3 = restTemplate.postForEntity("http://192.168.2.40:30405/order", order3, Boolean.class);
         Boolean rst3 = re3.getBody();
 
         return !rst1 & !rst2 & !rst3 ;
@@ -174,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
         //String futurename = futureRepository.findFutureByFutureID(order.getFutureID()).getFutureName();
         //String expired = futureRepository.findFutureByFutureID(order.getFutureID()).getExpired();
 
-        String url = "http://202.120.40.8:30405/broker_tradehistory?futureName=" + "test" + "&period=" + "test";
+        String url = "http://192.168.2.40:30405/broker_tradehistory?futureName=" + "test" + "&period=" + "test";
         //System.out.println(url);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Object> re =
@@ -226,7 +226,7 @@ public class OrderServiceImpl implements OrderService {
                 long id = idWorker.nextId();
                 order_once.setOrderID(id);
 
-                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://202.120.40.8:30405/order", order_once, Boolean.class);
+                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://192.168.2.40:30405/order", order_once, Boolean.class);
                 Boolean rst1 = re1.getBody();
 
                 count ++;
@@ -243,7 +243,7 @@ public class OrderServiceImpl implements OrderService {
         //String futurename = futureRepository.findFutureByFutureID(order.getFutureID()).getFutureName();
         //String expired = futureRepository.findFutureByFutureID(order.getFutureID()).getExpired();
 
-        String url = "http://202.120.40.8:30405/broker_tradehistory?futureName=" + "test" + "&period=" + "test";
+        String url = "http://192.168.2.40:30405/broker_tradehistory?futureName=" + "test" + "&period=" + "test";
         //System.out.println(url);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Object> re =
@@ -295,7 +295,7 @@ public class OrderServiceImpl implements OrderService {
                 long id = idWorker.nextId();
                 order_once.setOrderID(id);
 
-                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://202.120.40.8:30405/order", order_once, Boolean.class);
+                ResponseEntity<Boolean> re1 = restTemplate.postForEntity("http://192.168.2.40:30405/order", order_once, Boolean.class);
                 Boolean rst1 = re1.getBody();
 
                 count ++;
