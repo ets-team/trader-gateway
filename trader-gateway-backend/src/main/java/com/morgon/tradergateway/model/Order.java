@@ -29,6 +29,8 @@ public class Order implements Serializable {
 
     private String traderName;
 
+    private int traderID;
+
     private int cancelID;
 
     public Order() {}
@@ -123,6 +125,14 @@ public class Order implements Serializable {
 
     public void setCancelID(int cancelID) {
         this.cancelID = cancelID;
+    }
+
+    public int getTraderID() {
+        return traderID;
+    }
+
+    public void setTraderID(int traderID) {
+        this.traderID = traderID;
     }
 
 }
